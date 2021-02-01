@@ -4,17 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsActivity">
+    android:background="@color/teal_200"
+    tools:context=".ui.DetailsActivity">
     <TextView
-        android:padding="16dp"
-        android:id="@+id/f_title"
-        android:textSize="28dp"
-        android:textAlignment="center"
-        android:text="text"
+        android:id="@+id/film_Id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/tv_film_description"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/f_title"
+        android:text="text"
+        app:layout_constraintTop_toBottomOf="@+id/film_Id"
         tools:ignore="MissingConstraints"
-        android:gravity="center_horizontal" />
+        style="@style/tv_film_description" />
     <TextView
         android:padding="16dp"
         android:id="@+id/f_description"

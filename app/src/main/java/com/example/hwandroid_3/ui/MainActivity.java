@@ -6,12 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 
-import com.example.hwandroid_3.DetailsActivity;
 import com.example.hwandroid_3.R;
 import com.example.hwandroid_3.data.model.Film;
-import com.example.hwandroid_3.data.remote.GhibliApi;
 import com.example.hwandroid_3.data.remote.RetrofitFactory;
 
 import java.util.ArrayList;
@@ -45,20 +42,20 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnclick(new FilmAdapter.Onclick() {
             @Override
             public void onClick(int position) {
-                newIntent(position);
+               // newIntent(position);
                 getFilmId(position);
             }
         });
 
     }
 
-    private void newIntent(int position) {
-        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-        intent.putExtra("film_title",adapter.films.get(position).getTitle());
-        intent.putExtra("film_des",adapter.films.get(position).getDescription());
-        //Log.d("filmId",adapter.films.get(position).getId());
-        startActivity(intent);
-    }
+//    private void newIntent(int position) {
+//        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+//        intent.putExtra("film_title",adapter.films.get(position).getTitle());
+//        intent.putExtra("film_des",adapter.films.get(position).getDescription());
+//        Log.d("filmId",adapter.films.get(position).getId());
+//        startActivity(intent);
+//    }
 
 
 
@@ -85,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void getFilmId(int position){
         String id = adapter.films.get(position).getId();
         RetrofitFactory.getInstance().getFilmId(id).enqueue(new Callback<Film>() {
@@ -92,7 +90,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Film> call, Response<Film> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.i("fId", response.body().getId());
+                        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                        intent.putExtra("film_Id",response.body().getId());
+                        intent.putExtra("film_title",response.body().getTitle());
+                        intent.putExtra("film_des",response.body().getDescription());
+                        startActivity(intent);
+                        Log.i("f_Id", response.body().getId());
                     }
                 } else {
                     Log.e(TAG, response.message());
