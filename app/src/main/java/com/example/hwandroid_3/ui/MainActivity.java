@@ -1,5 +1,6 @@
 package com.example.hwandroid_3.ui;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActionBar actionBar =getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.hide();
+        }
         init();
         getFilms();
 
@@ -39,24 +44,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FilmAdapter(films,this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        adapter.setOnclick(new FilmAdapter.Onclick() {
-            @Override
-            public void onClick(int position) {
-               // newIntent(position);
-                getFilmId(position);
-            }
-        });
+        adapter.setOnclick(position -> getFilmId(position));
 
     }
-
-//    private void newIntent(int position) {
-//        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-//        intent.putExtra("film_title",adapter.films.get(position).getTitle());
-//        intent.putExtra("film_des",adapter.films.get(position).getDescription());
-//        Log.d("filmId",adapter.films.get(position).getId());
-//        startActivity(intent);
-//    }
-
 
 
     private void getFilms() {
